@@ -1,4 +1,3 @@
 {
-  "version": "2.0",
-  "ConnectionStrings": "Server=tcp:us156eq-azsql0101.database.windows.net,1433;Initial Catalog=Weir.Synertrex.Erps.Db;Persist Security Info=False;User ID=us156eq-azsqladmin;Password=Kh4KAFNWQi7jeZuayULlP69DLgMCxn;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  "version": "2.0"
 }

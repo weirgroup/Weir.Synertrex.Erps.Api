@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using Weir.Synertrex.ERPS.Api.Model;
-
-namespace Weir.Synertrex.ERPS.Api.Repository
+﻿namespace Weir.Synertrex.ERPS.Api.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using Weir.Synertrex.ERPS.Api.Model;
+
     public class ERPSRepository : IERPSRepository
     {
         public List<DeviceTwin> GetDeviceTwinsData()
@@ -27,7 +27,7 @@ namespace Weir.Synertrex.ERPS.Api.Repository
                                   ,[ReportedPropertiesDocument]
                                   ,[ReportedPropertiesVersion]
                                   ,[ReportedPropertiesLastUpdated]
-                               FROM [RPS].[ReportedProperties]";
+                                FROM [RPS].[ReportedProperties]";
 
                     using (SqlCommand command = new SqlCommand(text, connection))
                     {

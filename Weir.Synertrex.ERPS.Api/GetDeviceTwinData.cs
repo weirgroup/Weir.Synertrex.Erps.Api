@@ -1,7 +1,6 @@
 namespace Weir.Synertrex.ERPS.Api
 {
     using Microsoft.Azure.WebJobs;
-    using Microsoft.Azure.WebJobs.Host;
     using Newtonsoft.Json;
     using System;
     using System.Net.Http;
