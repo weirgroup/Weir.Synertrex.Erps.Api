@@ -1,13 +1,24 @@
-﻿namespace Weir.Synertrex.ERPS.Api.Repository
+﻿// <copyright file="ERPSRepository.cs" company="MicrosoftAndWeir">
+// Copyright (c) Microsoft Corporation and Weir PLC.  All rights reserved.
+// </copyright>
+namespace Weir.Synertrex.ERPS.Api.Repository
 {
     using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
     using Weir.Synertrex.ERPS.Api.Model;
 
+    /// <summary>
+    /// ERPSRepository class
+    /// </summary>
     public class ERPSRepository : IERPSRepository
     {
-        public List<DeviceTwin> GetDeviceTwinsData()
+        /// <summary>
+        /// Get Device Twin Data from ERPS database
+        /// </summary>
+        /// <param name="physicalIdentifier">Equipment Physical Identifier</param>
+        /// <returns>Collection of Device Twin</returns>
+        public List<DeviceTwin> GetDeviceTwinData(string physicalIdentifier)
         {
             List<DeviceTwin> deviceTwins = new List<DeviceTwin>();
 
@@ -18,19 +29,29 @@
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    var text = @"SELECT [Id]
-                                  ,[EquipmentId]
-                                  ,[PhysicalIdentifier]
-                                  ,[DesiredPropertiesDocument]
-                                  ,[DesiredPropertiesVersion]
-                                  ,[DesiredPropertiesLastUpdated]
-                                  ,[ReportedPropertiesDocument]
-                                  ,[ReportedPropertiesVersion]
-                                  ,[ReportedPropertiesLastUpdated]
-                                FROM [RPS].[ReportedProperties]";
+                    var query = @"SELECT [Id]
+                                       ,[EquipmentId]
+                                       ,[PhysicalIdentifier]
+                                       ,[DesiredPropertiesDocument]
+                                       ,[DesiredPropertiesVersion]
+                                       ,[DesiredPropertiesLastUpdated]
+                                       ,[ReportedPropertiesDocument]
+                                       ,[ReportedPropertiesVersion]
+                                       ,[ReportedPropertiesLastUpdated]
+                                 FROM [RPS].[ReportedProperties] WHERE 1=1 ";
 
-                    using (SqlCommand command = new SqlCommand(text, connection))
+                    if (!string.IsNullOrWhiteSpace(physicalIdentifier))
                     {
+                        query = string.Format("{0} AND PhysicalIdentifier=@PhysicalIdentifier", query);
+                    }
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        if (!string.IsNullOrWhiteSpace(physicalIdentifier))
+                        {
+                            command.Parameters.Add(new SqlParameter("@PhysicalIdentifier", physicalIdentifier));
+                        }
+
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
